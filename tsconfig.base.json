@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@mf-app/shared/data-store": ["libs/shared/data-store/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
