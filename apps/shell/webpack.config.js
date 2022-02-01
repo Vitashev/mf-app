@@ -24,7 +24,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       remotes: {
-        gallery: 'gallery@http://localhost:5000/remoteEntry.js',
+        gallery: 'gallery@gallery/remoteEntry.js',
       },
       shared: {
         '@angular/core': {
