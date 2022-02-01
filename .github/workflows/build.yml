@@ -30,13 +30,14 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: nx affected:lint
+        run: npm run nx affected:lint
 
       - name: Build
-        run: nx affected:build
+        run: npm run nx affected:build
 
       - name: Test
-        run: nx affected:lint
+        run: npm run nx affected:lint
+
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
