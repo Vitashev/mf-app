@@ -26,7 +26,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=5 origin $BASE_BRANCH
-            
+
+      - name: Echo
+        run: echo $BASE_BRANCH
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
