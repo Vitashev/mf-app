@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run -- nx affected:lint
+        run: npm run nx affected:lint
 
       - name: Build
         run: npm run nx affected:build
