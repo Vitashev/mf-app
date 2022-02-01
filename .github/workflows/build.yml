@@ -16,11 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_DIRECTORY: dist
+      BASE_BRANCH: ${{ github.base_ref }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      
+        with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        fetch-depth: 0
+      - run: |
+       git fetch --no-tags --prune --depth=5 origin $BASE_BRANCH
+
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
         with:
