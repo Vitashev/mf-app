@@ -23,8 +23,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-        ref: ${{ github.event.pull_request.head.ref }}
-        fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=5 origin $BASE_BRANCH
             
 
