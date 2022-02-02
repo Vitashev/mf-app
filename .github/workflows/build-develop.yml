@@ -86,7 +86,8 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          $path = "${$env:APP_DIRECTORY}/apps"
+          $dir = Env:APP_DIRECTORY;
+          $path = "${$dir}/apps"
           Write-Output $env:APP_DIRECTORY
           Write-Output $path
           Write-Output '____________________________'
