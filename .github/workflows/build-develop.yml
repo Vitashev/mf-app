@@ -95,7 +95,7 @@ jobs:
 
       - name: Deploy
         run: |-
-          gsutil -m rsync -R "$APP_DIRECTORY"\apps gs://$GCS_BUCKET
+          gsutil -m rsync -R "$APP_DIRECTORY"/apps gs://$GCS_BUCKET
 
       - name: Setting up serving
         run: |-
