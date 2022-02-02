@@ -30,12 +30,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $BASE_BRANCH
+      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
 
       - name: Echo
-        run: echo $BASE_BRANCH
+        run: echo $GITHUB_BASE_REF
       - name: Echo2
-        run: echo $AFFECTED_COMMAND_PARAMS
+        run: echo $GITHUB_HEAD_REF
       - name: Echo3
         run: git fetch --all
 
@@ -48,7 +48,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint -- $AFFECTED_COMMAND_PARAMS
+        run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
         run: npm run nx affected:build
