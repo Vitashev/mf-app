@@ -89,6 +89,7 @@ jobs:
           $path = "${$APP_DIRECTORY}/apps"
           Write-Output $APP_DIRECTORY
           Write-Output $path
+          Write-Output '____________________________'
           $arr = Get-ChildItem $path |
             Where-Object {$_.PSIsContainer} |
             Foreach-Object {$_.Name}
