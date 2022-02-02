@@ -41,8 +41,17 @@ jobs:
 
       - name: Test
         run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+
+      - name: Build
+        run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+
+      - name: Upload app artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: app
+          path: ${{ env.APP_DIRECTORY }}
   
-  build_previews:
+  deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -63,11 +72,57 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
-      - name: Upload app artifacts
-        uses: actions/upload-artifact@master
+    env:
+      APP_DIRECTORY: app-output
+      GCS_BUCKET: ${{ secrets.GCS_BUCKET_DEVELOP }}
+      GCS_PROJECT: ${{ secrets.GCS_PROJECT_DEVELOP }}
+      GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEVELOP }}
+
+    steps:
+      - name: Start deployment
+        uses: bobheadxi/deployments@v0.5.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB }}
+          env: development
+      - name: Download app artifacts
+        uses: actions/download-artifact@master
         with:
           name: app
           path: ${{ env.APP_DIRECTORY }}
+
+      - name: Setup GoogleCloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ env.GCS_SA_KEY }}
+          project_id: ${{ env.GCS_PROJECT }}
+          export_default_credentials: true
+
+      - name: Delete objects in bucket
+        run: |-
+          gsutil -m rm -r gs://$GCS_BUCKET/*.js gs://$GCS_BUCKET/*.js.map gs://$GCS_BUCKET/*.html gs://$GCS_BUCKET/*.webmanifest || echo "the bucket is empty"
+
+      - name: Deploy
+        run: |-
+          gsutil -m rsync -R "$APP_DIRECTORY" gs://$GCS_BUCKET
+
+      - name: Setting up serving
+        run: |-
+          gsutil web set -m shell/index.html gs://$GCS_BUCKET
+          gsutil web set -e shell/index.html gs://$GCS_BUCKET
+
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v0.5.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://platform-dev.anecdotes.ai
