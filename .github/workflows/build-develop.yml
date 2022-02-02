@@ -106,7 +106,10 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          gsutil -m rm -r gs://$GCS_BUCKET/*.js gs://$GCS_BUCKET/*.js.map gs://$GCS_BUCKET/*.html gs://$GCS_BUCKET/*.webmanifest || echo "the bucket is empty"
+          $folders = Get-ChildItem -Path $APP_DIRECTORY -Directory -Force -ErrorAction SilentlyContinue | Select-Object FullName;
+          foreach ($folder in $folders){
+            echo $folder
+          }
 
       - name: Deploy
         run: |-
