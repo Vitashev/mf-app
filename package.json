@@ -7,6 +7,8 @@
     "build": "nx build",
     "build-shell": "nx build --deploy-url /shell/",
     "affected-lint": "nx affected:lint",
+    "affected-build": "nx affected:build",
+    "affected-test": "nx affected:test",
     "test": "nx test",
     "postinstall": "ngcc --properties es2015 browser module main"
   },
