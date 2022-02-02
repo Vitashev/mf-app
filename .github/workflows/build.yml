@@ -26,7 +26,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 origin $BASE_BRANCH
+      - run: git fetch --no-tags --prune --depth=5 $BASE_BRANCH
 
       - name: Echo
         run: echo $BASE_BRANCH
