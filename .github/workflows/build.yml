@@ -21,7 +21,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      AFFECTED_COMMAND_PARAMS: --base=${{ env.REMOTE_NAME }}/{{ env.ORIGIN_BASE_BRANCH }} --head=${{ env.HEAD }}
+      AFFECTED_COMMAND_PARAMS: --base=$REMOTE_NAME/$ORIGIN_BASE_BRANCH --head=$HEAD
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -35,7 +35,7 @@ jobs:
       - name: Echo
         run: echo $BASE_BRANCH
       - name: Echo2
-        run: echo HEAD
+        run: echo $AFFECTED_COMMAND_PARAMS
       - name: Echo3
         run: git fetch --all
 
