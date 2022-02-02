@@ -86,11 +86,20 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          $folders = Get-ChildItem -Path $APP_DIRECTORY/apps -Directory -Force -ErrorAction SilentlyContinue | Select-Object FullName;
+          # $folders = Get-ChildItem -Path $APP_DIRECTORY/apps -Directory -Force -ErrorAction SilentlyContinue | Select-Object FullName;
 
-          foreach ($folder in $folders){
+          # foreach ($folder in $folders){
+          #   Write-Output $folder
+          # }
+
+          $arr = Get-ChildItem $APP_DIRECTORY/apps |
+          Where-Object {$_.PSIsContainer} |
+          Foreach-Object {$_.Name}
+
+          foreach ($folder in $arr){
             Write-Output $folder
           }
+
         shell: pwsh
 
       - name: Deploy
