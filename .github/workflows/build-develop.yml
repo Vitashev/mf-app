@@ -91,6 +91,7 @@ jobs:
           $arr = Get-ChildItem $path |
           Where-Object {$_.PSIsContainer} |
           Foreach-Object {$_.Name}
+          Write-Output $folder
 
           foreach ($folder in $arr){
             Write-Output $folder
