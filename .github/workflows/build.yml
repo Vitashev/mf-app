@@ -17,7 +17,7 @@ jobs:
     env:
       APP_DIRECTORY: dist
       BASE_BRANCH: ${{ github.base_ref }}
-      HEAD: github.event.pull_request.head.ref
+      HEAD: ${{  github.event.pull_request.head.ref }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
