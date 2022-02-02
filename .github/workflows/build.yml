@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_DIRECTORY: dist
-      BASE_BRANCH: ${{ github.base_ref }}
-      HEAD: ${{  github.event.pull_request.head.ref }}
+      BASE_BRANCH: origin/${{ github.base_ref }}
+      HEAD: ${{ github.event.pull_request.head.ref }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -44,7 +44,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint -- --base=origin/$BASE_BRANCH --head=$HEAD
+        run: npm run affected-lint -- --base=$BASE_BRANCH --head=$HEAD
 
       - name: Build
         run: npm run nx affected:build
