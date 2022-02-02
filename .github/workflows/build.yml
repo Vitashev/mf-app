@@ -32,6 +32,8 @@ jobs:
         run: echo $BASE_BRANCH
       - name: Echo2
         run: echo HEAD
+      - name: Echo3
+        run: git fetch --all
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
