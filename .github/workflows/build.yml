@@ -10,14 +10,18 @@ on:
   pull_request:
     branches: [develop, master, 'feature/*']
 
+env:
+  APP_DIRECTORY: dist
+  REMOTE_NAME: origin
+  BASE_BRANCH: ${{ github.base_ref }}
+  HEAD: ${{ github.event.pull_request.head.ref }}
+
 jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      APP_DIRECTORY: dist
-      BASE_BRANCH: origin/${{ github.base_ref }}
-      HEAD: ${{ github.event.pull_request.head.ref }}
+      AFFECTED_COMMAND_PARAMS: --base=$REMOTE_NAME/$ORIGIN_BASE_BRANCH --head=$HEAD
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -26,7 +30,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 $BASE_BRANCH
+      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $BASE_BRANCH
 
       - name: Echo
         run: echo $BASE_BRANCH
@@ -44,7 +48,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint -- --base=$BASE_BRANCH --head=$HEAD
+        run: npm run affected-lint -- $AFFECTED_COMMAND_PARAMS
 
       - name: Build
         run: npm run nx affected:build
