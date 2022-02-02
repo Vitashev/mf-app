@@ -44,7 +44,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint -- --base=$BASE_BRANCH --head=$HEAD
+        run: npm run affected-lint -- --base=origin/$BASE_BRANCH --head=$HEAD
 
       - name: Build
         run: npm run nx affected:build
