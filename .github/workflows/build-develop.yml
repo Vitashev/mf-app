@@ -86,10 +86,8 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          $folders = Get-ChildItem -Path $APP_DIRECTORY -Directory -Force -ErrorAction SilentlyContinue | Select-Object FullName;
-          foreach ($folder in $folders){
-            echo $folder
-          }
+          ./scripts/delete-folders-in-bucket.ps1
+        shell: pwsh
 
       - name: Deploy
         run: |-
