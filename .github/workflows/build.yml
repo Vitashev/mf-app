@@ -17,7 +17,7 @@ env:
   HEAD: ${{ github.event.pull_request.head.ref }}
 
 jobs:
-  build:
+  validation:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -30,11 +30,6 @@ jobs:
           fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
 
-      - name: Echo
-        run: echo $GITHUB_BASE_REF
-      - name: Echo2
-        run: echo $GITHUB_HEAD_REF
-
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
         with:
@@ -46,11 +41,32 @@ jobs:
       - name: Lint
         run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
-      - name: Build
-        run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
-
       - name: Test
         run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+  
+  build previews:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
+
+      - name: Use Node.js v12.14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.18.3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
