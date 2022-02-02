@@ -94,14 +94,15 @@ jobs:
           $arr = Get-ChildItem $path |
             Where-Object {$_.PSIsContainer} |
             Foreach-Object {$_.Name}
-            Write-Output $folder
+            
 
           foreach ($folder in $arr){
             $paths += " gs://${GCS_BUCKET}/${appsFolderName}/${folder}/*"
           }
 
-          $command = "gsutil -m rm -r ${paths}"
-          Invoke-Expression $command
+          $cleanUpCommand = "gsutil -m rm -r ${paths}"
+          Write-Output $cleanUpCommand
+          Invoke-Expression $cleanUpCommand
         shell: pwsh
 
       - name: Deploy
