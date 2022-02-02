@@ -1,12 +1,24 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
-const config = require('../../scripts/config.js');
+const config = require('../../scripts/env-variables.js');
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
   '@mf-app/shared/data-store',
 ]);
+
+function buildRemotes() {
+  const remotes = ['gallery']; // Here should be registered remote modules. Name of module should correspond to the name in workspace.json
+  const remotePath = config.remotePath.trim().replace(/\/$/g, '');
+  
+  return remotes.reduce((result, remoteName) => {
+    return {
+      ...result,
+      [remoteName]: `${remoteName}@${remotePath}/${remoteName}/remoteEntry.js`
+    }
+  }, {})
+}
 
 module.exports = {
   output: {
@@ -26,7 +38,7 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       remotes: {
-        gallery: `gallery@${config.remotePath}/gallery/remoteEntry.js`,
+        ...buildRemotes()
       },
       shared: {
         '@angular/core': {
