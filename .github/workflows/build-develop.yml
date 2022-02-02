@@ -86,12 +86,7 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          # $folders = Get-ChildItem -Path $APP_DIRECTORY/apps -Directory -Force -ErrorAction SilentlyContinue | Select-Object FullName;
-
-          # foreach ($folder in $folders){
-          #   Write-Output $folder
-          # }
-          $path = $APP_DIRECTORY
+          $path = $APP_DIRECTORY/apps
           Write-Output $path
           $arr = Get-ChildItem $path |
           Where-Object {$_.PSIsContainer} |
