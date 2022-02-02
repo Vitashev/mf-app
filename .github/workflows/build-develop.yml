@@ -91,7 +91,7 @@ jobs:
           # foreach ($folder in $folders){
           #   Write-Output $folder
           # }
-          $path = $APP_DIRECTORY/apps
+          $path = $APP_DIRECTORY
           Write-Output $path
           $arr = Get-ChildItem $path |
           Where-Object {$_.PSIsContainer} |
