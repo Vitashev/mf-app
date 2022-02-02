@@ -87,7 +87,9 @@ jobs:
       - name: Delete objects in bucket
         run: |-
           $dir = $Env:APP_DIRECTORY;
-          $path = "${dir}/apps"
+          $appsFolderName = 'apps';
+          $path = "${dir}/${appsFolderName}"
+          $bucketName = $Env:GCS_BUCKET;
 
           $paths = '';
 
@@ -97,7 +99,7 @@ jobs:
             
 
           foreach ($folder in $arr){
-            $paths += " gs://${GCS_BUCKET}/${appsFolderName}/${folder}/*"
+            $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
           }
 
           $cleanUpCommand = "gsutil -m rm -r ${paths}"
