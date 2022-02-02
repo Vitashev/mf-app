@@ -1,7 +1,7 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
-const config = require('../../scripts/env-variables.js');
+const config = require('../../scripts/config.js');
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
@@ -9,7 +9,7 @@ sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
 ]);
 
 function buildRemotes() {
-  const remotes = ['gallery']; // Here should be registered remote modules. Name of module should correspond to the name in workspace.json
+  const remotes = config.remoteModules;
   const remotePath = config.remotePath.trim().replace(/\/$/g, '');
   
   return remotes.reduce((result, remoteName) => {
