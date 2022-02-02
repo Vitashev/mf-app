@@ -88,18 +88,20 @@ jobs:
         run: |-
           $dir = $Env:APP_DIRECTORY;
           $path = "${dir}/apps"
-          Write-Output $env:APP_DIRECTORY
-          Write-Output $path
-          Write-Output '____________________________'
+
+          $paths = '';
+
           $arr = Get-ChildItem $path |
             Where-Object {$_.PSIsContainer} |
             Foreach-Object {$_.Name}
             Write-Output $folder
 
           foreach ($folder in $arr){
-            Write-Output $folder
+            $paths += " gs://${GCS_BUCKET}/${appsFolderName}/${folder}/*"
           }
 
+          $command = "gsutil -m rm -r ${paths}"
+          Invoke-Expression $command
         shell: pwsh
 
       - name: Deploy
