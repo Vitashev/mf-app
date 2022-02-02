@@ -77,12 +77,12 @@ jobs:
           name: app
           path: ${{ env.APP_DIRECTORY }}
 
-      # - name: Setup GoogleCloud
-      #   uses: google-github-actions/setup-gcloud@master
-      #   with:
-      #     service_account_key: ${{ env.GCS_SA_KEY }}
-      #     project_id: ${{ env.GCS_PROJECT }}
-      #     export_default_credentials: true
+      - name: Setup GoogleCloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ env.GCS_SA_KEY }}
+          project_id: ${{ env.GCS_PROJECT }}
+          export_default_credentials: true
 
       - name: Delete objects in bucket
         run: |-
@@ -103,7 +103,7 @@ jobs:
           }
 
           $cleanUpCommand = "gsutil -m rm -r ${paths}"
-          Write-Output $cleanUpCommand
+
           Invoke-Expression $cleanUpCommand
         shell: pwsh
 
