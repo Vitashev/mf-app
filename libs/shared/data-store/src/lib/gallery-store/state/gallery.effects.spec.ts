@@ -31,7 +31,7 @@ describe('GalleryEffects', () => {
 
   describe('init$', () => {
     it('should work', () => {
-      expect(false).toBeFalse();
+      expect(false).toBe(false);
     });
   });
 });
