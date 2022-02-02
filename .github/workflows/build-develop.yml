@@ -78,7 +78,7 @@ jobs:
           path: ${{ env.APP_DIRECTORY }}
 
       - name: Setup GoogleCloud
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           service_account_key: ${{ env.GCS_SA_KEY }}
           project_id: ${{ env.GCS_PROJECT }}
@@ -113,8 +113,8 @@ jobs:
 
       - name: Setting up serving
         run: |-
-          gsutil web set -m shell/index.html gs://$GCS_BUCKET
-          gsutil web set -e shell/index.html gs://$GCS_BUCKET
+          gsutil web set -m apps/shell/index.html gs://$GCS_BUCKET
+          gsutil web set -e apps/shell/index.html gs://$GCS_BUCKET
 
       - name: Update deployment status
         uses: bobheadxi/deployments@v0.5.2
