@@ -86,13 +86,13 @@ jobs:
 
       - name: Delete objects in bucket
         run: |-
-          $path = "${$APP_DIRECTORY}/${apps}"
+          $path = "${$APP_DIRECTORY}/apps"
           Write-Output $APP_DIRECTORY
           Write-Output $path
           $arr = Get-ChildItem $path |
-          Where-Object {$_.PSIsContainer} |
-          Foreach-Object {$_.Name}
-          Write-Output $folder
+            Where-Object {$_.PSIsContainer} |
+            Foreach-Object {$_.Name}
+            Write-Output $folder
 
           foreach ($folder in $arr){
             Write-Output $folder
