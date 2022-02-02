@@ -36,11 +36,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+      # - name: Lint
+      #   run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
-      - name: Test
-        run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+      # - name: Test
+      #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
         run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
@@ -63,13 +63,13 @@ jobs:
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEVELOP }}
 
     steps:
-      - name: Start deployment
-        uses: bobheadxi/deployments@v0.5.2
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB }}
-          env: development
+      # - name: Start deployment
+      #   uses: bobheadxi/deployments@v0.5.2
+      #   id: deployment
+      #   with:
+      #     step: start
+      #     token: ${{ secrets.GITHUB }}
+      #     env: development
 
       - name: Download app artifacts
         uses: actions/download-artifact@master
