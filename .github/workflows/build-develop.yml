@@ -89,7 +89,7 @@ jobs:
       - name: Setup GoogleCloud
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: ${{ env.GCS_SA_KEY }}
+          service_account_key: ${{ env.GCS_SA_KEY }} # service_account_key is deprecated
           project_id: ${{ env.GCS_PROJECT }}
 
       - name: Delete objects in bucket
