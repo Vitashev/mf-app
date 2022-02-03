@@ -1,19 +1,23 @@
+$bucketName = $Env:GCS_BUCKET;
 $dir = $Env:APP_DIRECTORY;
 $appsFolderName = 'apps';
 $path = "${dir}/${appsFolderName}"
-$bucketName = $Env:GCS_BUCKET;
+
+$appSubFolders = Get-ChildItem $path |
+  Where-Object {$_.PSIsContainer} |
+  Foreach-Object {$_.Name}
 
 $paths = '';
 
-$arr = Get-ChildItem $path |
-  Where-Object {$_.PSIsContainer} |
-  Foreach-Object {$_.Name}
-  
-
-foreach ($folder in $arr){
+foreach ($folder in $appSubFolders){
   $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
 }
 
 $cleanUpCommand = "gsutil -m rm -r ${paths}"
 
-Invoke-Expression $cleanUpCommand
+try {
+    Invoke-Expression $cleanUpCommand
+}
+catch {
+    Write-Output 'No files to delete'
+}
