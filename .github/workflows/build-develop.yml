@@ -30,10 +30,16 @@ jobs:
           echo head=$HEAD     base=$BASE
 
       - uses: actions/checkout@v2
-        name: Checkout [develop]
+        name: Checkout Base
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ env.BASE  }}
+
+      - uses: actions/checkout@v2
+        name: Checkout Head
+        with:
+          fetch-depth: 0
+          ref: ${{ env.HEAD  }}
       
       - run: git fetch origin $GITHUB_BASE_REF
 
