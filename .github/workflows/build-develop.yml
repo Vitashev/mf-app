@@ -10,7 +10,7 @@ on:
     inputs:
       logLevel:
         description: 'Build all? (y - yes, n - no)'     
-        required: true
+        required: false
         default: 'n'
       tags:
         description: 'Test scenario tags' 
