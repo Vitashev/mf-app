@@ -76,6 +76,12 @@ jobs:
       #     token: ${{ secrets.GITHUB }}
       #     env: development
 
+      - uses: actions/checkout@v2
+
+      - name: HELLO!!
+        run: ./powershell-script/hello.ps1
+        shell: pwsh
+
       - name: Download app artifacts
         uses: actions/download-artifact@master
         with:
