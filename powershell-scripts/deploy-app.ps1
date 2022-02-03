@@ -1,1 +1,4 @@
-Invoke-Expression "gsutil -m rsync -R "${Env:APP_DIRECTORY}" gs://${Env:GCS_BUCKET}"
+$dir = $Env:APP_DIRECTORY
+$bucket = $Env:GCS_BUCKET
+
+Invoke-Expression "gsutil -m rsync -R "${dir}" gs://${bucket}"
