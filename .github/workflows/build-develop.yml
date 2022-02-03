@@ -21,16 +21,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
-
-      - name: Current directory
-        run: Get-Location
-        shell: pwsh
+      
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
@@ -47,7 +44,7 @@ jobs:
       #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
-        run: npm run affected-build -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+        run: npx nx affected --target=build --parallel --max-parallel=3
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
