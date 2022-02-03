@@ -13,7 +13,7 @@ foreach ($folder in $appSubFolders){
   $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
 }
 
-$cleanUpCommand = "gsutil -m rm -r ${paths}"
+$cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
 
 try {
     Invoke-Expression -Command $cleanUpCommand -ErrorAction Continue
