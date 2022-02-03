@@ -21,4 +21,5 @@ try {
 }
 catch {
     Write-Output 'No files to delete'
+    exit 0
 }
