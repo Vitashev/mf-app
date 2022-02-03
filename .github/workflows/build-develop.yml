@@ -61,7 +61,7 @@ jobs:
       #   run: npx nx affected --target=test
 
       - name: Build
-        run: npx nx affected --target=build --all --parallel --max-parallel=3
+        run: npx nx affected --target=build --parallel --max-parallel=3
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
