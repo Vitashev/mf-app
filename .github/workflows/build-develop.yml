@@ -10,7 +10,7 @@ on:
 env:
   APP_DIRECTORY: dist
   REMOTE_NAME: origin
-  NX_BASE: ${{ github.event.after }}
+  NX_HEAD: ${{ github.event.after }}
   NX_BASE: ${{ github.event.before }}
   # NX_BASE: origin/develop~1
   # NX_HEAD: origin/develop
