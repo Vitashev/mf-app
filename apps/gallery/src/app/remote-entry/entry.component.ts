@@ -14,7 +14,7 @@ import { GalleryFacade } from '@mf-app/shared/data-store';
           {{ cat.title }}
         </h3>
         <div>
-          <img [src]="cat.url" alt="" />
+          <img [src]="cat.url" alt="s" />
         </div>
       </div>
     </ng-container>
