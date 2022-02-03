@@ -17,7 +17,7 @@ foreach ($folder in $appSubFolders) {
     $existingFolder = "${path}/${folder}"
 
     if (Test-Path -Path $existingFolder) {
-        Write-Output "${existingFolder} exists. Won't be copied"
+        Write-Output "${existingFolder} exists. Won't be copied from ${folderToCopy}"
     }
     else {
         Copy-Item "${folderToCopy}" -Destination $path

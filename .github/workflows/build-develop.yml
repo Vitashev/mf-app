@@ -12,8 +12,6 @@ env:
   REMOTE_NAME: origin
   NX_HEAD: ${{ github.event.after }}
   NX_BASE: ${{ github.event.before }}
-  # NX_BASE: origin/develop~1
-  # NX_HEAD: origin/develop
 
 jobs:
   build:
@@ -57,13 +55,10 @@ jobs:
         run: npm ci
 
       # - name: Lint
-      #   run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+      #   run: npx nx affected --target=lint
 
       # - name: Test
-      #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
-
-      # - name: Build
-      #   run: npx nx affected --target=build --parallel --max-parallel=3 --base=$BASE --head=$HEAD
+      #   run: npx nx affected --target=test
 
       - name: Build
         run: npx nx affected --target=build --parallel --max-parallel=3
