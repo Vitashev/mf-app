@@ -43,7 +43,7 @@ jobs:
       #     fetch-depth: 0
       #     ref: ${{ env.HEAD  }}
       
-      - run: git fetch origin $GITHUB_BASE_REF
+      # - run: git fetch origin $GITHUB_BASE_REF
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
