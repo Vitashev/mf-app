@@ -75,10 +75,6 @@ jobs:
         run: ./powershell-scripts/deploy-app.ps1
         shell: pwsh
 
-      - name: Setting up serving
-        run: ./powershell-scripts/setup-serving.ps1
-        shell: pwsh
-
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
         with:

@@ -29,3 +29,9 @@ catch {
 }
 
 Invoke-Expression "gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' rsync -R '${dir}' gs://${bucketName}"
+
+$shellAppName= $Env:SHELL_APP_NAME;
+$indexFilePath = "${path}/${shellAppName}/index.html";
+
+Invoke-Expression "gsutil web set -m ${indexFilePath} gs://${bucketName}"
+Invoke-Expression "gsutil web set -e ${indexFilePath} gs://${bucketName}"
