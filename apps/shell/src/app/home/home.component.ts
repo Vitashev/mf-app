@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   ) as any;
   constructor(private galleryFacade: GalleryFacade) {}
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
     //this.galleryFacade.init();
   }

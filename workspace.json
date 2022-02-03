@@ -177,6 +177,7 @@
           },
           "configurations": {
             "production": {
+              "deployUrl": "/apps/shell/",
               "budgets": [
                 {
                   "type": "initial",
