@@ -16,7 +16,7 @@ foreach ($folder in $appSubFolders){
 $cleanUpCommand = "gsutil -m rm -r ${paths}"
 
 try {
-    Invoke-Expression $cleanUpCommand
+    Invoke-Expression -Command $cleanUpCommand
 }
 catch {
     Write-Output 'No files to delete'
