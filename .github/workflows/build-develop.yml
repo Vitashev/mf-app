@@ -28,6 +28,10 @@ jobs:
           fetch-depth: 0
       - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
 
+      - name: Current directory
+        run: Get-Location
+        shell: pwsh
+
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
         with:
