@@ -23,6 +23,9 @@ jobs:
         name: Checkout [develop]
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+      
+      - run: git fetch origin $GITHUB_BASE_REF
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
@@ -42,7 +45,7 @@ jobs:
       #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3
+        run: npx nx affected --target=build --parallel --max-parallel=3 --base=$REMOTE_NAME/$GITHUB_BASE_REF
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
