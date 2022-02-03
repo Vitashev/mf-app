@@ -10,10 +10,10 @@ on:
 env:
   APP_DIRECTORY: dist
   REMOTE_NAME: origin
-  HEAD: ${{ github.event.after }}
-  BASE: ${{ github.event.before }}
-  NX_BASE: origin/develop~1
-  NX_HEAD: origin/develop
+  NX_BASE: ${{ github.event.after }}
+  NX_BASE: ${{ github.event.before }}
+  # NX_BASE: origin/develop~1
+  # NX_HEAD: origin/develop
 
 jobs:
   build:
