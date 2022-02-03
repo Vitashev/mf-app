@@ -24,3 +24,11 @@ foreach ($folder in $appSubFolders) {
         Write-Output "${folder} copied"
     }
 }
+
+$appssssSubFolders = Get-ChildItem $path |
+Where-Object { $_.PSIsContainer } |
+Foreach-Object { $_.Name }
+
+foreach ($folder in $appssssSubFolders){
+    Write-Output $folder
+}
