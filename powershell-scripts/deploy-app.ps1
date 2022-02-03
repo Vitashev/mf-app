@@ -1,20 +1,21 @@
 $bucketName = $Env:GCS_BUCKET;
 $dir = $Env:APP_DIRECTORY;
-$deployPath= $Env:DEPLOY_PATH;
+$deployPath = $Env:DEPLOY_PATH;
 $path = "${dir}/${deployPath}"
 
 if (-not (Test-Path -Path $path)) {
     Write-Output "App list is empty. Nothing to deploy"
+    EXIT
 }
 
 $appSubFolders = Get-ChildItem $path |
-  Where-Object {$_.PSIsContainer} |
-  Foreach-Object {$_.Name}
+Where-Object { $_.PSIsContainer } |
+Foreach-Object { $_.Name }
 
 $paths = '';
 
-foreach ($folder in $appSubFolders){
-  $paths += " gs://${bucketName}/${deployPath}/${folder}/*"
+foreach ($folder in $appSubFolders) {
+    $paths += " gs://${bucketName}/${deployPath}/${folder}/*"
 }
 
 $cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
