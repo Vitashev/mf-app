@@ -12,8 +12,6 @@ on:
         description: 'Build all? (y - yes, n - no)'     
         required: false
         default: 'n'
-      tags:
-        description: 'Test scenario tags' 
 
 env:
   APP_DIRECTORY: dist
