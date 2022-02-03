@@ -3,4 +3,4 @@ $dataFromBucketDir="./dataFromBucket"
 $bucket = $Env:GCS_BUCKET
 
 Invoke-Expression -Command "mkdir ${dataFromBucketDir}"
-Invoke-Expression  -Command "gsutil -m rsync -r -x 'apps/*' gs://${bucket} ${dataFromBucketDir}"
+Invoke-Expression  -Command "gsutil -m rsync -r gs://${bucket} ${dataFromBucketDir}"
