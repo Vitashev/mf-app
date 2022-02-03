@@ -96,14 +96,12 @@ jobs:
         shell: pwsh
 
       - name: Deploy
-        run: |-
-          gsutil -m rsync -R "$APP_DIRECTORY" gs://$GCS_BUCKET
+        run: ./powershell-scripts/deploy-app.ps1
+        shell: pwsh
 
       - name: Setting up serving
-        run: |-
-          gsutil web set -m apps/shell/index.html gs://$GCS_BUCKET
-          gsutil web set -e apps/shell/index.html gs://$GCS_BUCKET
-
+        run: ./powershell-scripts/setup-serving.ps1
+        shell: pwsh
       # - name: Update deployment status
       #   uses: bobheadxi/deployments@v0.5.2
       #   if: always()
