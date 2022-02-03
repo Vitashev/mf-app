@@ -10,8 +10,8 @@ on:
 env:
   APP_DIRECTORY: dist
   REMOTE_NAME: origin
-  HEAD: ${{ github.event.pull_request.head.ref }}
-  BEFORE: ${{ github.event.before }}
+  HEAD: ${{ github.event.after }}
+  BASE: ${{ github.event.before }}
 
 jobs:
   build:
@@ -24,6 +24,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+      - name: DUMB
+        run: |
+          echo head=$HEAD     base=$BASE
 
       - uses: actions/checkout@v2
         name: Checkout [develop]
