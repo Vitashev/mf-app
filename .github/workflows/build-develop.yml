@@ -35,13 +35,13 @@ jobs:
         name: Checkout Base
         with:
           fetch-depth: 0
-          ref: ${{ env.BASE  }}
+          # ref: ${{ env.BASE  }}
 
-      - uses: actions/checkout@v2
-        name: Checkout Head
-        with:
-          fetch-depth: 0
-          ref: ${{ env.HEAD  }}
+      # - uses: actions/checkout@v2
+      #   name: Checkout Head
+      #   with:
+      #     fetch-depth: 0
+      #     ref: ${{ env.HEAD  }}
       
       - run: git fetch origin $GITHUB_BASE_REF
 
