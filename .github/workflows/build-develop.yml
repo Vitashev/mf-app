@@ -111,6 +111,10 @@ jobs:
           service_account_key: ${{ env.GCS_SA_KEY }}
           project_id: ${{ env.GCS_PROJECT }}
           export_default_credentials: true
+      
+      - name: Download existing and overwrite
+        run: ./powershell-scripts/download-existing-and-overwrite.ps1
+        shell: pwsh
 
       - name: Delete objects in bucket
         run: ./powershell-scripts/delete-folders-in-bucket.ps1
