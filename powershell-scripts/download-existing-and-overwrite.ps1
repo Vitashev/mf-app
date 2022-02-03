@@ -2,12 +2,13 @@ $bucketName = $Env:GCS_BUCKET;
 $dir = $Env:APP_DIRECTORY;
 $deployPath = $Env:DEPLOY_PATH;
 $path = "${dir}/${deployPath}"
-$dataFromBucketDir = "./dataFromBucket/${deployPath}"
+$dataFromBucketDir = "./dataFromBucket"
+$dataFromBucketDeploymentDir = "${dataFromBucketDir}/${deployPath}"
 
 Invoke-Expression -Command "mkdir ${dataFromBucketDir}"
 Invoke-Expression  -Command "gsutil -m rsync -r gs://${bucketName} ${dataFromBucketDir}"
 
-$appSubFolders = Get-ChildItem $dataFromBucketDir |
+$appSubFolders = Get-ChildItem $dataFromBucketDeploymentDir |
 Where-Object { $_.PSIsContainer } |
 Foreach-Object { $_.Name }
 
