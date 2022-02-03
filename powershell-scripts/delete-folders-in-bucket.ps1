@@ -13,7 +13,7 @@ foreach ($folder in $appSubFolders){
   $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
 }
 
-$cleanUpCommand = "gsutil -m rm -r ${paths} || 'No files to delete'"
+$cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
 
 try {
     Write-Output 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
