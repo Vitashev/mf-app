@@ -12,6 +12,8 @@ env:
   REMOTE_NAME: origin
   HEAD: ${{ github.event.after }}
   BASE: ${{ github.event.before }}
+  NX_BASE: origin/develop~1
+  NX_HEAD: origin/develop
 
 jobs:
   build:
@@ -64,7 +66,7 @@ jobs:
       #   run: npx nx affected --target=build --parallel --max-parallel=3 --base=$BASE --head=$HEAD
 
       - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3 --head=$BASE --base=$HEAD
+        run: npx nx affected --target=build --parallel --max-parallel=3
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
