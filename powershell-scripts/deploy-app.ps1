@@ -1,12 +1,26 @@
-$dir = $Env:APP_DIRECTORY
-$bucket = $Env:GCS_BUCKET
+$bucketName = $Env:GCS_BUCKET;
+$dir = $Env:APP_DIRECTORY;
+$deployPath= $Env:DEPLOY_PATH;
+$path = "${dir}/${deployPath}"
 
-$appssssSubFolders = Get-ChildItem $dir |
-Where-Object { $_.PSIsContainer } |
-Foreach-Object { $_.Name }
+$appSubFolders = Get-ChildItem $path |
+  Where-Object {$_.PSIsContainer} |
+  Foreach-Object {$_.Name}
 
-foreach ($folder in $appssssSubFolders){
-    Write-Output $folder
+$paths = '';
+
+foreach ($folder in $appSubFolders){
+  $paths += " gs://${bucketName}/${deployPath}/${folder}/*"
 }
 
-Invoke-Expression "gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' rsync -R '${dir}' gs://${bucket}"
+$cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
+
+try {
+    Invoke-Expression -Command $cleanUpCommand -ErrorAction Continue
+}
+catch {
+    Write-Output 'No files to delete'
+    exit 0
+}
+
+Invoke-Expression "gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' rsync -R '${dir}' gs://${bucketName}"

@@ -24,4 +24,3 @@ foreach ($folder in $appSubFolders) {
         Write-Output "${folder} copied"
     }
 }
-

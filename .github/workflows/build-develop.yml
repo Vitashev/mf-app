@@ -109,10 +109,6 @@ jobs:
         run: ./powershell-scripts/download-existing-and-overwrite.ps1
         shell: pwsh
 
-      - name: Delete objects in bucket
-        run: ./powershell-scripts/delete-folders-in-bucket.ps1
-        shell: pwsh
-
       - name: Deploy
         run: ./powershell-scripts/deploy-app.ps1
         shell: pwsh
