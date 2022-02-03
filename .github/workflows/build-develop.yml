@@ -42,7 +42,7 @@ jobs:
       #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3 --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+        run: npx nx affected --target=build --parallel --max-parallel=3
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
