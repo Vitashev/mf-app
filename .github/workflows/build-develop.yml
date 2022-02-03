@@ -6,8 +6,6 @@ name: Validate/Build/Deploy
 on:
   push:
     branches: [develop]
-  pull_request:
-    branches: [develop, master, 'feature/*']
 
 env:
   APP_DIRECTORY: dist
