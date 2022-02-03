@@ -68,13 +68,13 @@ jobs:
       REMOTE_PATH: http://34.107.186.167/apps
 
     steps:
-      # - name: Start deployment
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   id: deployment
-      #   with:
-      #     step: start
-      #     token: ${{ secrets.GITHUB }}
-      #     env: development
+      - name: Start deployment
+        uses: bobheadxi/deployments@v0.5.2
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB }}
+          env: development
 
       - uses: actions/checkout@v2
 
@@ -102,12 +102,12 @@ jobs:
       - name: Setting up serving
         run: ./powershell-scripts/setup-serving.ps1
         shell: pwsh
-      # - name: Update deployment status
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   if: always()
-      #   with:
-      #     step: finish
-      #     token: ${{ secrets.GITHUB }}
-      #     status: ${{ job.status }}
-      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      #     env_url: https://platform-dev.anecdotes.ai
+      - name: Update deployment status
+        uses: bobheadxi/deployments@v0.5.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://platform-dev.anecdotes.ai
