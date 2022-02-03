@@ -11,6 +11,7 @@ env:
   APP_DIRECTORY: dist
   REMOTE_NAME: origin
   HEAD: ${{ github.event.pull_request.head.ref }}
+  BEFORE: ${{ github.event.before }}
 
 jobs:
   build:
@@ -19,6 +20,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - uses: actions/checkout@v2
         name: Checkout [develop]
         with:
@@ -45,7 +51,7 @@ jobs:
       #   run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
 
       - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3 --base=$REMOTE_NAME/develop
+        run: npx nx affected --target=build --parallel --max-parallel=3 --base $BEFORE --head=$REMOTE_NAME/$GITHUB_HEAD_REF
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@master
