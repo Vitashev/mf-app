@@ -13,13 +13,13 @@ Where-Object { $_.PSIsContainer } |
 Foreach-Object { $_.Name }
 
 foreach ($folder in $appSubFolders) {
-    $folderToCopy = "${dataFromBucketDir}/${folder}";
+    $folderToCopy = "${dataFromBucketDeploymentDir}/${folder}";
 
     if (Test-Path -Path $folder) {
-        Write-Output "${folderToCopy} exists. Won't be copied"
+        Write-Output "${folder} exists. Won't be copied"
     }
     else {
-        Copy-Item "${dataFromBucketDir}/${folder}" -Destination $path
-        Write-Output "${folderToCopy} copied"
+        Copy-Item "${folderToCopy}" -Destination $path
+        Write-Output "${folder} copied"
     }
 }
