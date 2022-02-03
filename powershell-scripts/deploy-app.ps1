@@ -3,6 +3,8 @@ $dir = $Env:APP_DIRECTORY;
 $deployPath= $Env:DEPLOY_PATH;
 $path = "${dir}/${deployPath}"
 
+Write-Output (Test-Path -Path $path);
+Write-Output "SHAHHSHAHSHSA"
 if ((Test-Path -Path $path) -eq $false) {
     Write-Output "App list is empty. Nothing to deploy"
 }
