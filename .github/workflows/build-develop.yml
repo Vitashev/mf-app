@@ -58,7 +58,7 @@ jobs:
 
       - name: Build
         run: |
-          if ($Env:BUILD_ALL -eq 'y') {
+          if ($Env:BUILD_ALL -match 'y') {
             $allParam = '--all'
           }
           Invoke-Expression -Command "npx nx affected --target=build ${allParam} --parallel --max-parallel=3"
