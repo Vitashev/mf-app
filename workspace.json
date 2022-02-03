@@ -198,7 +198,7 @@
               ],
               "outputHashing": "all",
               "customWebpackConfig": {
-                "path": "apps/shell/prod.js"
+                "path": "apps/shell/webpack/prod.js"
               }
             },
             "development": {

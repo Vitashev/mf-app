@@ -8,7 +8,7 @@ module.exports = {
     ...baseWebpackConfig.plugins,
     new ModuleFederationPlugin({
       ...sharedConfig.moduleFederationBaseConfig,
-      remotes: sharedConfig.buildRemotes(sharedConfig.variables.remotePath),
+      remotes: sharedConfig.buildRemotes('/apps'),
     }),
   ],
 };
