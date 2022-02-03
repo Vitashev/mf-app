@@ -6,9 +6,18 @@ name: Validate/Build/Deploy
 on:
   push:
     branches: [develop]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Build all?'     
+        required: true
+        default: 'n'
+      tags:
+        description: 'Test scenario tags' 
 
 env:
   APP_DIRECTORY: dist
+  BUILD_ALL: ${{ github.event.inputs.logLevel }}
   NX_HEAD: ${{ github.event.after }}
   NX_BASE: ${{ github.event.before }}
   SHELL_APP_NAME: shell
@@ -48,7 +57,12 @@ jobs:
       #   run: npx nx affected --target=test
 
       - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3
+        run: |
+          if ($Env:BUILD_ALL -eq 'y') {
+            $allParam = '--all'
+          }
+          Invoke-Expression -Command "npx nx affected --target=build ${allParam} --parallel --max-parallel=3"
+        shell: pwsh
 
       - name: Setup GoogleCloud
         uses: google-github-actions/setup-gcloud@v0

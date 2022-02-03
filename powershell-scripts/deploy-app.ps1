@@ -4,7 +4,7 @@ $deployPath= $Env:DEPLOY_PATH;
 $path = "${dir}/${deployPath}"
 
 if ((Test-Path -Path $path) -eq $false) {
-    Write-Output "App list is empty. Nothig to deploy"
+    Write-Output "App list is empty. Nothing to deploy"
 }
 
 $appSubFolders = Get-ChildItem $path |
