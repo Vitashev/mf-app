@@ -25,6 +25,7 @@ import { GalleryFacade } from '@mf-app/shared/data-store';
         display: grid;
         width: 100%;
         grid-template-columns: repeat(4, 1fr);
+        background: red;
       }
 
       .selected {

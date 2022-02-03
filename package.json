@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
+    "start": "nx run shell:serve-mfe",
     "build": "nx build",
     "build-shell": "nx build --deploy-url /shell/",
     "affected-lint": "nx affected:lint",
