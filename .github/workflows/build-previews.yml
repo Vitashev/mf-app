@@ -1,4 +1,4 @@
-name: Validate/Build/Deploy
+name: Validate/Build/Deploy Preview
 
 # Controls when the action will run. Triggers the workflow on push or pull request.
 # Link to default env variables that are provided by GitHub - https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables

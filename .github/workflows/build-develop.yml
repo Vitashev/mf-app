@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Build all?'     
+        description: 'Build all? (y - yes, n - no)'     
         required: true
         default: 'n'
       tags:
