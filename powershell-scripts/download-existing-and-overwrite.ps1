@@ -14,9 +14,10 @@ Foreach-Object { $_.Name }
 
 foreach ($folder in $appSubFolders) {
     $folderToCopy = "${dataFromBucketDeploymentDir}/${folder}";
+    $existingFolder = "${path}/${folder}"
 
-    if (Test-Path -Path $folder) {
-        Write-Output "${folder} exists. Won't be copied"
+    if (Test-Path -Path $existingFolder) {
+        Write-Output "${existingFolder} exists. Won't be copied"
     }
     else {
         Copy-Item "${folderToCopy}" -Destination $path
