@@ -9,7 +9,6 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  REMOTE_NAME: origin
   NX_HEAD: ${{ github.event.after }}
   NX_BASE: ${{ github.event.before }}
 
@@ -75,7 +74,6 @@ jobs:
     # if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     env:
-      APP_DIRECTORY: app-output
       GCS_BUCKET: ${{ secrets.GCS_BUCKET_DEVELOP }}
       GCS_PROJECT: ${{ secrets.GCS_PROJECT_DEVELOP }}
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEVELOP }}

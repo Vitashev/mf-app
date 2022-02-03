@@ -20,15 +20,8 @@ foreach ($folder in $appSubFolders) {
         Write-Output "${existingFolder} exists. Won't be copied from ${folderToCopy}"
     }
     else {
-        Copy-Item "${folderToCopy}" -Destination $path
+        Copy-Item "${folderToCopy}" -Destination $path -Recurse
         Write-Output "${folder} copied"
     }
 }
 
-$appssssSubFolders = Get-ChildItem $path |
-Where-Object { $_.PSIsContainer } |
-Foreach-Object { $_.Name }
-
-foreach ($folder in $appssssSubFolders){
-    Write-Output $folder
-}
