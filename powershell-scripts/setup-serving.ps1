@@ -1,4 +1,8 @@
 $bucket = $Env:GCS_BUCKET
+$deployPath= $Env:DEPLOY_PATH;
+$shellAppName= $Env:SHELL_APP_NAME;
 
-Invoke-Expression "gsutil web set -m apps/shell/index.html gs://${bucket}"
-Invoke-Expression "gsutil web set -e apps/shell/index.html gs://${bucket}"
+$indexFilePath = "${deployPath}/${shellAppName}/index.html";
+
+Invoke-Expression "gsutil web set -m ${indexFilePath} gs://${bucket}"
+Invoke-Expression "gsutil web set -e ${indexFilePath} gs://${bucket}"
