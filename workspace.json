@@ -178,7 +178,6 @@
           "configurations": {
             "production": {
               "deployUrl": "/apps/shell/",
-              "outputPath": "dist/apps/shell",
               "budgets": [
                 {
                   "type": "initial",

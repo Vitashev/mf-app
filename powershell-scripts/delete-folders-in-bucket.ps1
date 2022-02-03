@@ -1,7 +1,7 @@
 $bucketName = $Env:GCS_BUCKET;
 $dir = $Env:APP_DIRECTORY;
-$appsFolderName = 'apps';
-$path = "${dir}/${appsFolderName}"
+$deployPath= $Env:DEPLOY_PATH;
+$path = "${dir}/${deployPath}"
 
 $appSubFolders = Get-ChildItem $path |
   Where-Object {$_.PSIsContainer} |
@@ -10,7 +10,7 @@ $appSubFolders = Get-ChildItem $path |
 $paths = '';
 
 foreach ($folder in $appSubFolders){
-  $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
+  $paths += " gs://${bucketName}/${deployPath}/${folder}/*"
 }
 
 $cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
