@@ -78,10 +78,6 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: HELLO!!
-        run: ./powershell-script/hello.ps1
-        shell: pwsh
-
       - name: Download app artifacts
         uses: actions/download-artifact@master
         with:
@@ -96,26 +92,7 @@ jobs:
           export_default_credentials: true
 
       - name: Delete objects in bucket
-        run: |-
-          $dir = $Env:APP_DIRECTORY;
-          $appsFolderName = 'apps';
-          $path = "${dir}/${appsFolderName}"
-          $bucketName = $Env:GCS_BUCKET;
-
-          $paths = '';
-
-          $arr = Get-ChildItem $path |
-            Where-Object {$_.PSIsContainer} |
-            Foreach-Object {$_.Name}
-            
-
-          foreach ($folder in $arr){
-            $paths += " gs://${bucketName}/${appsFolderName}/${folder}/*"
-          }
-
-          $cleanUpCommand = "gsutil -m rm -r ${paths}"
-
-          Invoke-Expression $cleanUpCommand
+        run: ./powershell-scripts/delete-folders-in-bucket.ps1
         shell: pwsh
 
       - name: Deploy
