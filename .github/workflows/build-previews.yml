@@ -46,7 +46,7 @@ jobs:
       - name: Test
         run: npm run affected-test
 
-  deploy_previews:
+  build_and_deploy_previews:
     runs-on: ubuntu-latest
     # if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
@@ -82,7 +82,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build app
+      - name: Build affected apps
         run: npx nx affected --target=build --parallel --max-parallel=3
 
       - name: Sync with cache
