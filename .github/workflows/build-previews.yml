@@ -9,8 +9,8 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  NX_HEAD: ${{ github.head_ref }}
-  NX_BASE: ${{ github.base_ref }}
+  NX_HEAD: ${{ github.head.sha }}
+  NX_BASE: ${{ github.base.sha }}
 
 jobs:
   validate:
