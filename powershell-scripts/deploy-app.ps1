@@ -18,6 +18,7 @@ foreach ($folder in $appSubFolders) {
     $paths += " gs://${bucketName}/${deployPath}/${folder}/*"
 }
 
+# Delete app's artifacts in bucket
 $cleanUpCommand = "gsutil -m rm -r ${paths} || exit 0"
 
 try {
@@ -28,10 +29,12 @@ catch {
     exit 0
 }
 
+# Upload app's artifacts
 Invoke-Expression "gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' rsync -R '${dir}' gs://${bucketName}"
 
+# Setting up serving for index.html
 $shellAppName= $Env:SHELL_APP_NAME;
 $indexFilePath = "${deployPath}/${shellAppName}/index.html";
-
+Write-Output "INDEX -------- ${indexFilePath}"
 Invoke-Expression "gsutil web set -m ${indexFilePath} gs://${bucketName}"
 Invoke-Expression "gsutil web set -e ${indexFilePath} gs://${bucketName}"
