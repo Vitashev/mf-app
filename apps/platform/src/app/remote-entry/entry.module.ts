@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-
+import {HomeComponent} from '../components/home.component';
 import { RemoteEntryComponent } from './entry.component';
 import { AuthGuard, SharedAuthModule } from '@mf-app/shared/auth';
 
 @NgModule({
-  declarations: [RemoteEntryComponent],
+  declarations: [RemoteEntryComponent, HomeComponent],
   imports: [
     BrowserModule,
     SharedAuthModule,
@@ -16,6 +16,10 @@ import { AuthGuard, SharedAuthModule } from '@mf-app/shared/auth';
         canActivateChild: [AuthGuard],
         component: RemoteEntryComponent,
         children: [
+          {
+            path: 'selected-cats',
+            component: HomeComponent
+          },
           {
             path: 'gallery',
             // component: PlatformPocComponent

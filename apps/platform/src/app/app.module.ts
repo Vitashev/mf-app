@@ -5,10 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { PlatformPocComponent } from './components/platform-poc/platform-poc.component';
 
 @NgModule({
-  declarations: [AppComponent, PlatformPocComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([

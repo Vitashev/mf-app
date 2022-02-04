@@ -5,6 +5,7 @@ const path = require('path');
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
   '@mf-app/shared/data-store',
+  '@mf-app/shared/auth',
 ]);
 
 module.exports = {
