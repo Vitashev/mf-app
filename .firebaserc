@@ -3,7 +3,7 @@
     "default": "anecdotes-mfe-poc"
   },
   "targets": {
-    "anecdotes-dev": {
+    "anecdotes-mfe-poc": {
       "hosting": {
         "develop": [
           "anecdotes-mfe-poc"
