@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   template: `<div class="remote-entry">
     <h2>auth's Remote Entry Component</h2>
   </div>
-  <button (click)="login()">LOGIN</button>
+  <button (click)="login()">LOGIN TO APP</button>
   `,
   styles: [
     `
