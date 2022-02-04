@@ -9,8 +9,8 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  NX_HEAD: ${{ env.GITHUB_HEAD_REF }}
-  NX_BASE: ${{ env.GITHUB_BASE_REF }}
+  NX_HEAD: ${{ github.env.GITHUB_HEAD_REF }}
+  NX_BASE: ${{ github.env.GITHUB_BASE_REF }}
 
 jobs:
   build:
