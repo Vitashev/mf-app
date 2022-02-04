@@ -51,7 +51,6 @@ jobs:
     # if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     env:
-      APP_DIRECTORY: app-output
       GCS_BUCKET: ${{ secrets.GCS_BUCKET_DEVELOP }}
       GCS_PROJECT: ${{ secrets.GCS_PROJECT_DEVELOP }}
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEVELOP }}
@@ -84,7 +83,11 @@ jobs:
         run: npm ci
 
       - name: Build app
-        run: npx nx affected --target=build --parallel --max-parallel=3 --all
+        run: npx nx affected --target=build --parallel --max-parallel=3
+
+      - name: Sync with cache
+        run: ./powershell-scripts/download-existing-and-overwrite.ps1
+        shell: pwsh
 
       - name: Deploy previews
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -93,8 +96,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANECDOTES_DEV }}'
           projectId: anecdotes-mfe-poc
-          channelId: live
-          # expires: 5d
+          expires: 5d
       
       # - name: Update deployment status
       #   uses: bobheadxi/deployments@v0.5.2
