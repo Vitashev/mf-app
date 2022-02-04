@@ -93,7 +93,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANECDOTES_DEV }}'
           projectId: anecdotes-mfe-poc
-          expires: 5d
+          # expires: 5d
       
       # - name: Update deployment status
       #   uses: bobheadxi/deployments@v0.5.2
