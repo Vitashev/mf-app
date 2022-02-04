@@ -29,7 +29,7 @@ import { GalleryFacade } from '@mf-app/shared/data-store';
 
       .selected {
         border: 3px solid purple;
-        background: red;
+        background: purple;
       }
 
       img {
