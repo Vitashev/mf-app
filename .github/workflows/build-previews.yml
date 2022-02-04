@@ -9,23 +9,25 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  BUILD_ALL: ${{ github.event.inputs.logLevel }}
-  NX_HEAD: ${{ github.event.after }}
-  NX_BASE: ${{ github.event.before }}
+  NX_HEAD: ${{ github.event.pull_request.head.sha }}
+  NX_BASE: ${{ github.event.pull_request.base.sha }}
 
 jobs:
-  build:
+  validate:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - uses: actions/checkout@v2
+        name: Checkout Base
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - run: git fetch --no-tags --prune --depth=5 $REMOTE_NAME $GITHUB_BASE_REF
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
@@ -36,18 +38,15 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+        run: npm run affected-lint
 
       - name: Test
-        run: npm run affected-test -- --base=$REMOTE_NAME/$GITHUB_BASE_REF --head=$GITHUB_HEAD_REF
+        run: npm run affected-test
 
-  deploy_previews:
+  build_and_deploy_previews:
     runs-on: ubuntu-latest
-    needs: build
-    # if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     env:
-      APP_DIRECTORY: app-output
       GCS_BUCKET: ${{ secrets.GCS_BUCKET_DEVELOP }}
       GCS_PROJECT: ${{ secrets.GCS_PROJECT_DEVELOP }}
       GCS_SA_KEY: ${{ secrets.GCS_SA_KEY_DEVELOP }}
@@ -55,29 +54,25 @@ jobs:
       DEPLOY_PATH: apps
 
     steps:
-      # - name: Start deployment
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   id: deployment
-      #   with:
-      #     step: start
-      #     token: ${{ secrets.GITHUB }}
-      #     env: development
-
       - uses: actions/checkout@v2
         name: Checkout Base
         with:
           fetch-depth: 0
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
         with:
           node-version: 12.18.3
+      
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build app
-        run: npx nx affected --target=build --parallel --max-parallel=3 --all
+      - name: Build affected apps
+        run: npx nx affected --target=build --parallel --max-parallel=3
+
+      - name: Sync with cache
+        run: ./powershell-scripts/download-existing-and-overwrite.ps1
+        shell: pwsh
 
       - name: Deploy previews
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -85,15 +80,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANECDOTES_DEV }}'
-          projectId: anecdotes-dev
+          projectId: anecdotes-mfe-poc
           expires: 5d
-      
-      # - name: Update deployment status
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   if: always()
-      #   with:
-      #     step: finish
-      #     token: ${{ secrets.GITHUB }}
-      #     status: ${{ job.status }}
-      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      #     env_url: https://platform-dev.anecdotes.ai
