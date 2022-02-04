@@ -102,32 +102,6 @@
         }
       }
     },
-    "gallery-e2e": {
-      "root": "apps/gallery-e2e",
-      "sourceRoot": "apps/gallery-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/gallery-e2e/cypress.json",
-            "devServerTarget": "gallery:serve:development"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "gallery:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/gallery-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
     "shared-data-store": {
       "projectType": "library",
       "root": "libs/shared/data-store",
@@ -257,33 +231,6 @@
           "executor": "@nrwl/workspace:run-commands",
           "options": {
             "commands": ["nx serve gallery", "nx serve shell"]
-          }
-        }
-      }
-    },
-    "shell-e2e": {
-      "root": "apps/shell-e2e",
-      "sourceRoot": "apps/shell-e2e/src",
-      "projectType": "application",
-      "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/shell-e2e/cypress.json",
-            "devServerTarget": "shell:serve:development",
-            "tsConfig": "apps/shell-e2e/tsconfig.json"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "shell:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/shell-e2e/**/*.{js,ts}"]
           }
         }
       }
