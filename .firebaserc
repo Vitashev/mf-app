@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "anecdotes-mfe-poc"
+  },
+  "targets": {
+    "anecdotes-dev": {
+      "hosting": {
+        "develop": [
+          "anecdotes-mfe-poc"
+        ]
+      }
+    }
+  }
+}
