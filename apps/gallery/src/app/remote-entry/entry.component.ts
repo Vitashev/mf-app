@@ -51,4 +51,8 @@ export class RemoteEntryComponent {
   isSelected(catId: any) {
     return this.galleryFacade.isCatSelected(catId);
   }
+
+  ngOnInit(): void {
+    console.log('GALLLERY INITIALIZED')
+  }
 }

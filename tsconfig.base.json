@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mf-app/shared/auth": ["libs/shared/auth/src/index.ts"],
       "@mf-app/shared/data-store": ["libs/shared/data-store/src/index.ts"]
     }
   },

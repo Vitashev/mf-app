@@ -7,11 +7,13 @@ import { HomeComponent } from './home/home.component';
 import { GalleryStoreModule } from '@mf-app/shared/data-store';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { AuthGuard, SharedAuthModule } from '@mf-app/shared/auth';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
+    SharedAuthModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     GalleryStoreModule,
@@ -19,13 +21,15 @@ import { EffectsModule } from '@ngrx/effects';
       [
         {
           path: '',
-          component: HomeComponent,
+          canActivateChild: [AuthGuard],
+          loadChildren: () =>
+                import('platform/Module').then((m) => m.RemoteEntryModule),
         },
         {
-          path: 'gallery',
+          path: 'auth',
           loadChildren: () =>
-            import('gallery/Module').then((m) => m.RemoteEntryModule),
-        },
+            import('auth/Module').then((m) => m.RemoteEntryModule),
+        }
       ],
       { initialNavigation: 'enabledBlocking' }
     ),
@@ -33,4 +37,4 @@ import { EffectsModule } from '@ngrx/effects';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
