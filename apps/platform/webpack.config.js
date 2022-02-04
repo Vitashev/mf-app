@@ -10,7 +10,7 @@ sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
 
 module.exports = {
   output: {
-    uniqueName: 'gallery',
+    uniqueName: 'platform',
     publicPath: 'auto',
   },
   optimization: {
@@ -24,32 +24,19 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'gallery',
+      name: 'platform',
       filename: 'remoteEntry.js',
+      remotes: {
+        gallery: 'gallery@http://localhost:5000/remoteEntry.js'
+      },
       exposes: {
-        './Module': 'apps/gallery/src/app/remote-entry/entry.module.ts',
+        './Module': 'apps/platform/src/app/remote-entry/entry.module.ts',
       },
       shared: {
-        '@angular/core': {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: '12.2.9',
-        },
-        '@angular/common': {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: '12.2.9',
-        },
-        '@angular/common/http': {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: '12.2.9',
-        },
-        '@angular/router': {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: '12.2.9',
-        },
+        '@angular/core': { singleton: true, strictVersion: true },
+        '@angular/common': { singleton: true, strictVersion: true },
+        '@angular/common/http': { singleton: true, strictVersion: true },
+        '@angular/router': { singleton: true, strictVersion: true },
         ...sharedMappings.getDescriptors(),
       },
     }),

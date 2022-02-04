@@ -15,6 +15,8 @@ new webpack.EnvironmentPlugin({
 /** Here should be registered remote modules and their remote paths for serving. Name of module should correspond to the name in workspace.json */
 const remoteModulesMapping = {
   gallery: 'http://localhost:5000/',
+  auth: 'http://localhost:3500/',
+  platform: 'http://localhost:3600/'
 };
 
 const variables = {

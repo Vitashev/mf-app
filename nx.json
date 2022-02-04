@@ -27,7 +27,16 @@
     ]
   },
   "projects": {
+    "auth": {
+      "tags": []
+    },
     "gallery": {
+      "tags": []
+    },
+    "platform": {
+      "tags": []
+    },
+    "shared-auth": {
       "tags": []
     },
     "shared-data-store": {
