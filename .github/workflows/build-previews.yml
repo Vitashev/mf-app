@@ -9,9 +9,8 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  BUILD_ALL: ${{ github.event.inputs.logLevel }}
-  NX_HEAD: ${{ github.event.after }}
-  NX_BASE: ${{ github.event.before }}
+  NX_HEAD: ${{ env.GITHUB_HEAD_REF }}
+  NX_BASE: ${{ env.GITHUB_BASE_REF }}
 
 jobs:
   build:
