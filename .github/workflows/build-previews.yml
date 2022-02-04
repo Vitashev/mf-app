@@ -77,7 +77,7 @@ jobs:
           node-version: 12.18.3
 
       - name: Build app
-        run: npx nx affected --target=build --configuration=develop --parallel --max-parallel=3 --all
+        run: npx nx affected --target=build --parallel --max-parallel=3 --all
 
       - name: Deploy previews
         uses: FirebaseExtended/action-hosting-deploy@v0

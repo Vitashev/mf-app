@@ -30,19 +30,11 @@
     "gallery": {
       "tags": []
     },
-    "gallery-e2e": {
-      "tags": [],
-      "implicitDependencies": ["gallery"]
-    },
     "shared-data-store": {
       "tags": []
     },
     "shell": {
       "tags": []
-    },
-    "shell-e2e": {
-      "tags": [],
-      "implicitDependencies": ["shell"]
     }
   }
 }
