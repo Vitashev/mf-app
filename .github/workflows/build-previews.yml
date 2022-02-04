@@ -9,14 +9,19 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  NX_HEAD: ${{ github.GITHUB_HEAD_REF }}
-  NX_BASE: ${{ github.GITHUB_BASE_REF }}
+  NX_HEAD: ${{ github.ref }}
+  NX_BASE: ${{ github.base }}
   $REMOTE_NAME: origin
 
 jobs:
   validate:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -25,8 +30,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      #   uses: nrwl/nx-set-shas@v2
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
