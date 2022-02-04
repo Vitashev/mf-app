@@ -29,9 +29,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      #   uses: nrwl/nx-set-shas@v2
-
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
         with:
@@ -48,7 +45,6 @@ jobs:
 
   build_and_deploy_previews:
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     env:
       GCS_BUCKET: ${{ secrets.GCS_BUCKET_DEVELOP }}
@@ -58,21 +54,10 @@ jobs:
       DEPLOY_PATH: apps
 
     steps:
-      # - name: Start deployment
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   id: deployment
-      #   with:
-      #     step: start
-      #     token: ${{ secrets.GITHUB }}
-      #     env: development
-
       - uses: actions/checkout@v2
         name: Checkout Base
         with:
           fetch-depth: 0
-
-      # - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      #   uses: nrwl/nx-set-shas@v2
 
       - name: Use Node.js v12.14
         uses: actions/setup-node@v1
@@ -97,13 +82,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANECDOTES_DEV }}'
           projectId: anecdotes-mfe-poc
           expires: 5d
-      
-      # - name: Update deployment status
-      #   uses: bobheadxi/deployments@v0.5.2
-      #   if: always()
-      #   with:
-      #     step: finish
-      #     token: ${{ secrets.GITHUB }}
-      #     status: ${{ job.status }}
-      #     deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-      #     env_url: https://platform-dev.anecdotes.ai
