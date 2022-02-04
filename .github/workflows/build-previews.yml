@@ -11,6 +11,7 @@ env:
   APP_DIRECTORY: dist
   NX_HEAD: ${{ github.GITHUB_HEAD_REF }}
   NX_BASE: ${{ github.GITHUB_BASE_REF }}
+  $REMOTE_NAME: origin
 
 jobs:
   validate:
