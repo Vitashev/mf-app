@@ -1,6 +1,20 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
+const workspaceJson = require('../../workspace.json');
+
+const remoteApps = ['gallery'];
+
+function buildRemotes() {
+  const isCiProcess = process.env.CI;
+
+  return remoteApps.reduce(
+    (result, remoteName) => {
+      const remoteAppPort = workspaceJson.projects[remoteName].targets.serve.options.port;
+      const remotePath = isCiProcess ? `/apps/${remoteName}` : `http://localhost:${remoteAppPort}`;
+      return ({...result, [remoteName]: `${remoteName}@${remotePath}/remoteEntry.js`  })
+  }, {});
+} 
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
@@ -26,10 +40,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'platform',
       filename: 'remoteEntry.js',
-      remotes: {
-        ...['gallery'].reduce(
-          (result, remoteName) => ({...result, [remoteName]: `${remoteName}@/apps/${remoteName}/remoteEntry.js`  }), {})
-      },
+      remotes: buildRemotes(),
       exposes: {
         './Module': 'apps/platform/src/app/remote-entry/entry.module.ts',
       },

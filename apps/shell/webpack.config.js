@@ -1,10 +1,28 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
+const workspaceJson = require('../../workspace.json');
+workspaceJson.projects.auth.targets.serve.options.port
+
+const remoteApps = ['platform', 'auth'];
+
+// console.log(process.env);
+// throw new Error('aaaa')
+
+function buildRemotes() {
+  const isCiProcess = process.env.CI;
+
+  return remoteApps.reduce(
+    (result, remoteName) => {
+      const remoteAppPort = workspaceJson.projects[remoteName].targets.serve.options.port;
+      const remotePath = isCiProcess ? `/apps/${remoteName}` : `http://localhost:${remoteAppPort}`;
+      return ({...result, [remoteName]: `${remoteName}@${remotePath}/remoteEntry.js`  })
+  }, {});
+} 
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
-  /* mapped paths to share */
+  '@mf-app/shared/data-store',
 ]);
 
 module.exports = {
@@ -16,10 +34,6 @@ module.exports = {
     runtimeChunk: false,
     minimize: false,
   },
-  remotes: {
-    ...['platform'].reduce(
-      (result, remoteName) => ({...result, [remoteName]: `${remoteName}@/apps/${remoteName}/remoteEntry.js`  }), {})
-  },
   resolve: {
     alias: {
       ...sharedMappings.getAliases(),
@@ -27,7 +41,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      remotes: {},
+      remotes: buildRemotes(),
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },
         '@angular/common': { singleton: true, strictVersion: true },
