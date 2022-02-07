@@ -9,7 +9,6 @@ on:
 
 env:
   APP_DIRECTORY: dist
-  CI: true
   NX_HEAD: ${{ github.event.pull_request.head.sha }}
   NX_BASE: ${{ github.event.pull_request.base.sha }}
 
@@ -39,10 +38,10 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run affected-lint
+        run: npx nx affected --target=lint --parallel --max-parallel=3
 
       - name: Test
-        run: npm run affected-test
+        run: npx nx affected --target=test --parallel --max-parallel=3
 
   build_and_deploy_previews:
     runs-on: ubuntu-latest
