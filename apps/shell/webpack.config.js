@@ -4,18 +4,21 @@ const path = require('path');
 
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
-  '@mf-app/shared/data-store',
-  '@mf-app/shared/auth',
+  /* mapped paths to share */
 ]);
 
 module.exports = {
   output: {
-    uniqueName: 'platform',
+    uniqueName: 'shell',
     publicPath: 'auto',
   },
   optimization: {
     runtimeChunk: false,
     minimize: false,
+  },
+  remotes: {
+    ...['platform'].reduce(
+      (result, remoteName) => ({...result, [remoteName]: `${remoteName}@/apps/${remoteName}/remoteEntry.js`  }), {})
   },
   resolve: {
     alias: {
@@ -24,15 +27,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'platform',
-      filename: 'remoteEntry.js',
-      remotes: {
-        ...['gallery'].reduce(
-          (result, remoteName) => ({...result, [remoteName]: `${remoteName}@/apps/${remoteName}/remoteEntry.js`  }), {})
-      },
-      exposes: {
-        './Module': 'apps/platform/src/app/remote-entry/entry.module.ts',
-      },
+      remotes: {},
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },
         '@angular/common': { singleton: true, strictVersion: true },

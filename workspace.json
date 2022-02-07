@@ -370,12 +370,11 @@
             "styles": ["apps/shell/src/styles.css"],
             "scripts": [],
             "customWebpackConfig": {
-              "path": "apps/shell/webpack/base.js"
+              "path": "apps/shell/webpack.config.js"
             }
           },
           "configurations": {
             "production": {
-              "deployUrl": "/apps/shell/",
               "budgets": [
                 {
                   "type": "initial",
@@ -396,7 +395,7 @@
               ],
               "outputHashing": "all",
               "customWebpackConfig": {
-                "path": "apps/shell/webpack/prod.ci.js"
+                "path": "apps/shell/webpack.prod.config.js"
               }
             },
             "development": {
@@ -405,10 +404,7 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true,
-              "customWebpackConfig": {
-                "path": "apps/shell/webpack/dev.local.js"
-              }
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -454,12 +450,7 @@
         "serve-mfe": {
           "executor": "@nrwl/workspace:run-commands",
           "options": {
-            "commands": [
-              "nx serve gallery",
-              "nx serve shell",
-              "nx serve auth",
-              "nx serve platform"
-            ]
+            "commands": ["nx serve shell"]
           }
         }
       }
