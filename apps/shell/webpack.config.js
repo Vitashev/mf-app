@@ -2,8 +2,12 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 const mf = require('@angular-architects/module-federation/webpack');
 const path = require('path');
 const workspaceJson = require('../../workspace.json');
+workspaceJson.projects.auth.targets.serve.options.port
 
-const remoteApps = ['gallery'];
+const remoteApps = ['platform', 'auth'];
+
+// console.log(process.env);
+// throw new Error('aaaa')
 
 function buildRemotes() {
   const isCiProcess = process.env.CI;
@@ -19,12 +23,11 @@ function buildRemotes() {
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(path.join(__dirname, '../../tsconfig.base.json'), [
   '@mf-app/shared/data-store',
-  '@mf-app/shared/auth',
 ]);
 
 module.exports = {
   output: {
-    uniqueName: 'platform',
+    uniqueName: 'shell',
     publicPath: 'auto',
   },
   optimization: {
@@ -38,12 +41,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'platform',
-      filename: 'remoteEntry.js',
       remotes: buildRemotes(),
-      exposes: {
-        './Module': 'apps/platform/src/app/remote-entry/entry.module.ts',
-      },
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },
         '@angular/common': { singleton: true, strictVersion: true },

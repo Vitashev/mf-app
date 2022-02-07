@@ -15,6 +15,7 @@ on:
 
 env:
   APP_DIRECTORY: dist
+  CI: true
   BUILD_ALL: ${{ github.event.inputs.logLevel }}
   NX_HEAD: ${{ github.event.after }}
   NX_BASE: ${{ github.event.before }}

@@ -9,6 +9,7 @@ on:
 
 env:
   APP_DIRECTORY: dist
+  CI: true
   NX_HEAD: ${{ github.event.pull_request.head.sha }}
   NX_BASE: ${{ github.event.pull_request.base.sha }}
 

@@ -8,9 +8,7 @@ import { GalleryFacade } from '@mf-app/shared/data-store';
 export class AppComponent implements OnInit {
   constructor(private galleryFacade: GalleryFacade) {}
   ngOnInit(): void {
-    console.log('INITIALIZE')
+    console.log('INITIALIZEaaaaaaaaa')
     this.galleryFacade.init();
   }
-
-
 }
